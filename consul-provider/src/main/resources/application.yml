@@ -6,10 +6,40 @@ spring:
       host: localhost
       port: 8500
       discovery:
-        prefer-ip-address: true
-        tags: version=1.0
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}
+        #healthCheckPath: ${management.contextPath}/health
+        healthCheckPath: /health
         healthCheckInterval: 15s
-        health-check-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+        instance-id: consul-provider
+        enabled: true
+      enabled: true
+      config:
+        enabled: true   #默认是true --
+        format: YAML    # 表示consul上面文件的格式 有四种 YAML PROPERTIES KEY-VALUE FILES
+        #data-key: configuration    #表示consul上面的KEY值(或者说文件的名字) 默认是data
+        data-key: data    #表示consul上面的KEY值(或者说文件的名字) 默认是data
+        #prefix设置配置值的基本文件夹
+        #defaultContext设置所有应用程序使用的文件夹名称
+        #profileSeparator设置用于使用配置文件在属性源中分隔配置文件名称的分隔符的值
+
+#spring:
+#  application:
+#    name: consul-provider
+#  cloud:
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        prefer-ip-address: true
+#        tags: version=1.0
+#        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}
+##        instance-id: consul-provider
+#        healthCheckInterval: 15s
+#        health-check-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+#        enabled: true
+#        service-name: consul-provider
+#      enabled: true
+
+
+
 server:
   port: 19820

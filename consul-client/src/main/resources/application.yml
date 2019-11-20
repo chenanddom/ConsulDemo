@@ -1,17 +1,47 @@
-
+server:
+  port: 19822
 spring:
-  application:
-    name: consul-client
   cloud:
     consul:
       host: localhost
       port: 8500
       discovery:
-        prefer-ip-address: true
-        tags: version=1.0
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}
+        #healthCheckPath: ${management.contextPath}/health
+        healthCheckPath: /health
         healthCheckInterval: 15s
-        health-check-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+        instance-id: consul-client
+        enabled: true
+      enabled: true
+  application:
+    name: consul-client
 
-server:
-  port: 19822
+management:
+     endpoints:
+       web:
+         exposure:
+           include: '*'
+
+#
+#spring:
+#  application:
+#    name: consul-client
+#  cloud:
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        prefer-ip-address: true
+#        tags: version=1.0
+#        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}
+#        healthCheckInterval: 15s
+#        health-check-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+#        enabled: true
+#      enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
